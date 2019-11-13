@@ -24,8 +24,8 @@ public class RetrofitClient {
         if (instance == null) {
             instance = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // convert jason data to observable:source of data
+                    .addConverterFactory(GsonConverterFactory.create()) // parse json data
                     .client(getHttpClient())
                     .build();
         }

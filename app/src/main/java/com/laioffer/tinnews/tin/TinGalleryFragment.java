@@ -10,22 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.laioffer.tinnews.R;
-import com.laioffer.tinnews.common.TinBasicFragment;
-import com.laioffer.tinnews.retrofit.NewsRequestApi;
-import com.laioffer.tinnews.retrofit.RetrofitClient;
+
+import com.laioffer.tinnews.mvp.MvpFragment;
+
 import com.laioffer.tinnews.retrofit.response.News;
 import com.mindorks.placeholderview.SwipeDecor;
 import com.mindorks.placeholderview.SwipePlaceHolderView;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TinGalleryFragment extends TinBasicFragment implements TinNewsCard.OnSwipeListener {
+     // tinbasicfragment is extended by mvpfragment, and we need presenter in mvpfragment
+    // tingalleryfragment is a view, so we need to extend tincontract.view
+public class TinGalleryFragment extends MvpFragment<TinContract.Presenter> implements TinNewsCard.OnSwipeListener,
+    TinContract.View{
 
     private SwipePlaceHolderView mSwipeView;
 
@@ -68,22 +69,12 @@ public class TinGalleryFragment extends TinBasicFragment implements TinNewsCard.
             }
         });
 
-        getData();
 
         return view;
     }
 
-    private void getData() {
-        RetrofitClient.getInstance().create(NewsRequestApi.class).getNewsByCountry("us")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .filter(baseResponse -> baseResponse != null && baseResponse.articles != null)
-                .subscribe(baseResponse -> {
-                    showNewsCard(baseResponse.articles);
-                });
-    }
-
-    private void showNewsCard(List<News> newsList) {
+    @Override
+    public void showNewsCard(List<News> newsList) {
         for (News news : newsList) {
             TinNewsCard tinNewsCard = new TinNewsCard(news, mSwipeView, this);
             mSwipeView.addView(tinNewsCard);
@@ -92,6 +83,11 @@ public class TinGalleryFragment extends TinBasicFragment implements TinNewsCard.
 
     @Override
     public void onLike(News news) {
+        presenter.saveFavoriteNews(news);
+    }
 
+    @Override
+    public TinContract.Presenter getPresenter() {
+        return new TinPresenter();
     }
 }
