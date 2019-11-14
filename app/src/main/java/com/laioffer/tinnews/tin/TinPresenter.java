@@ -46,4 +46,18 @@ public class TinPresenter implements TinContract.Presenter {
     public void saveFavoriteNews(News news) {
         model.saveFavoriteNews(news);
     }
+
+    @Override
+    public void onError() {
+        if (view != null) {
+            view.onError();
+        }
+    }
+
+    @Override
+    public void onSavedSuccess() {
+        if (view != null) {
+            view.onSavedSuccess();
+        }
+    }
 }

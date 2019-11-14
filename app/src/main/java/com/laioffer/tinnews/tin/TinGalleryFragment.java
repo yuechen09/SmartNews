@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.laioffer.tinnews.R;
 
@@ -79,6 +80,16 @@ public class TinGalleryFragment extends MvpFragment<TinContract.Presenter> imple
             TinNewsCard tinNewsCard = new TinNewsCard(news, mSwipeView, this);
             mSwipeView.addView(tinNewsCard);
         }
+    }
+
+    @Override
+    public void onError() {
+        Toast.makeText(getContext(), "Same news has been saved before", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSavedSuccess() {
+        Toast.makeText(getContext(), "You successfully liked the news", Toast.LENGTH_SHORT).show();
     }
 
     @Override
