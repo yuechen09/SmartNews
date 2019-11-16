@@ -16,8 +16,8 @@ public abstract class BaseViewModel<V extends RecyclerView.ViewHolder> {
 
 
     public V createViewHolder(ViewGroup parent) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(itemResourceId, parent, false);
-        return createItemViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(itemResourceId, parent, false);  // create view
+        return createItemViewHolder(view); // pass to SavedNewsViewHolder
     }
 
 

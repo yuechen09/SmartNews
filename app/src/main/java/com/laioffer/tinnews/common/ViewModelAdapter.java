@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+// a data matches a viewModel, in the vewModel defines the corresponding layout(type) and viewHolder
 public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final List<BaseViewModel> viewModels;
     private final SparseArrayCompat<BaseViewModel> viewTypeMap;
@@ -53,7 +54,7 @@ public class ViewModelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return viewTypeMap.get(viewType).createViewHolder(parent);
+        return viewTypeMap.get(viewType).createViewHolder(parent);  // support multiple viewHolders
     }
 
 
