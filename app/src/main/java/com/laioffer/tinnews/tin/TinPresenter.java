@@ -1,6 +1,10 @@
 package com.laioffer.tinnews.tin;
 
+import com.laioffer.tinnews.profile.CountryEvent;
 import com.laioffer.tinnews.retrofit.response.News;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -17,17 +21,26 @@ public class TinPresenter implements TinContract.Presenter {
     @Override
     public void onCreate() {
 
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onDestroy() {
 
+        EventBus.getDefault().unregister(this); // to avoid memory leak
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(CountryEvent countryEvent) {
+        if (this.view != null) {
+            this.model.fetchData(countryEvent.country);
+        }
     }
 
     @Override
     public void onViewAttached(TinContract.View view) {
         this.view = view;
-        this.model.fetchData();
+        this.model.fetchData("us");
     }
 
     @Override

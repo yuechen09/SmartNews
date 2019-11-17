@@ -9,14 +9,14 @@ import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.common.BaseViewModel;
 
 public class TitleViewModel extends BaseViewModel<TitleViewModel.TitleViewModelHolder> {
-    private String title;
+    private final String title;
 
-    public TitleViewModel (String title) {
+    public TitleViewModel(String title) {
         super(R.layout.title_layout);
         this.title = title;
     }
 
-    public TitleViewModel (String title, @LayoutRes int layout) {
+    public TitleViewModel(String title, @LayoutRes int layout) {
         super(layout);
         this.title = title;
     }
@@ -31,13 +31,11 @@ public class TitleViewModel extends BaseViewModel<TitleViewModel.TitleViewModelH
         holder.title.setText(title);
     }
 
-
-    static class TitleViewModelHolder extends RecyclerView.ViewHolder {
+    public static class TitleViewModelHolder extends RecyclerView.ViewHolder {
         TextView title;
         TitleViewModelHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
         }
     }
-
 }

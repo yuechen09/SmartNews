@@ -19,4 +19,7 @@ public interface NewsDao {
     @Query("SELECT * FROM news")  // if there is update, return all
     Flowable<List<News>> getAll();
 
+    @Query("DELETE FROM news")
+    void deleteAllNews();
+
 }
